@@ -1,0 +1,49 @@
+{% block content %}
+
+{% load static %}
+
+<html>
+<link rel="stylesheet" href="{% static 'css/emailcheck.css' %}">
+<body>
+{% for field in form %}
+<div id="container">
+    <h2>Verify Email</h2>
+    {% if field.help_text %}
+    <p>{{field.help_text}}</p>
+    {% endif %}
+    <form method="post"> 
+        {% csrf_token %}
+        
+        {{ field }}
+        
+        <br>
+       
+      <button type="submit">Check Email</button>
+    </form>
+
+    {% endfor %}
+    <br>
+    {% if messages %}
+    <div class="message">
+        
+        {% for message in messages %}
+        {% if message.tags == 'success'%} 
+        <span style="color: green;" >{{ message.tags | upper }} : {{ message }}</span>
+        {% endif %} 
+        {% if message.tags == 'error'%} 
+        <span style="color: rgb(185, 11, 11);" >{{ message.tags | upper }} : {{ message }}</span> 
+        {% endif %}
+        {% if message.tags == 'info'%} 
+        <span style="color: rgb(185, 11, 11);" >{{ message.tags | upper }} : {{ message }}</span> 
+        {% endif %}
+        {% endfor %}
+        
+    </div>
+    {% endif %}
+</div>
+  <br>
+ 
+
+</body>
+</html>
+{% endblock %}
